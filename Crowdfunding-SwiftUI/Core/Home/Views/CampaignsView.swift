@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CampaignsView: View {
     @StateObject private var viewModel = CampaignsViewModel()
-    @State private var showCreateCampaign = false
+    @State private var showingCreateCampaign = false
     
     var body: some View {
         NavigationView {
@@ -10,58 +10,47 @@ struct CampaignsView: View {
                 if viewModel.isLoading {
                     ProgressView()
                 } else if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
+                    Text("Error: \(errorMessage)")
                         .foregroundColor(.red)
+                } else if viewModel.campaigns.isEmpty {
+                    Text("No campaigns found")
                 } else {
                     ForEach(viewModel.campaigns) { campaign in
                         NavigationLink(destination: CampaignDetailView(campaign: campaign)) {
-                            CampaignRowView(campaign: campaign)
+                            VStack(alignment: .leading) {
+                                Text(campaign.title)
+                                    .font(.headline)
+                                Text("Target: $\(campaign.target, specifier: "%.2f")")
+                                    .font(.subheadline)
+                            }
                         }
                     }
                 }
             }
             .navigationTitle("Campaigns")
             .navigationBarItems(trailing:
-                Button(action: { showCreateCampaign = true }) {
+                Button(action: { showingCreateCampaign = true }) {
                     Image(systemName: "plus")
                 }
             )
-            .sheet(isPresented: $showCreateCampaign) {
-                CreateCampaignsView(viewModel: viewModel)
+            .sheet(isPresented: $showingCreateCampaign) {
+                CreateCampaignView(viewModel: viewModel)
             }
         }
     }
 }
 
-struct CampaignRowView: View {
+// Placeholder for CampaignDetailView (to be implemented later)
+struct CampaignDetailView: View {
     let campaign: Campaign
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(campaign.title)
-                .font(.headline)
-            Text(campaign.description)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            HStack {
-                Text("Goal: Ksh \(campaign.target, specifier: "%.2f")")
-                Spacer()
-                Text(campaign.status.rawValue.capitalized)
-                    .foregroundColor(statusColor)
-            }
-        }
-    }
-    
-    private var statusColor: Color {
-        switch campaign.status {
-        case .active: return .green
-        case .completed: return .blue
-        case .draft: return .gray
-        case .cancelled: return .red
-        }
+        Text("Campaign Details for \(campaign.title)")
     }
 }
 
-#Preview {
-    CampaignsView()
+struct CampaignsView_Previews: PreviewProvider {
+    static var previews: some View {
+        CampaignsView()
+    }
 }

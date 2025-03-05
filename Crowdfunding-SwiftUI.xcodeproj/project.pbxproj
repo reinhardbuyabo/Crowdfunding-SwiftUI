@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D7BF92C22D78BEA600C4C220 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D7BF92C12D78BEA000C4C220 /* README.md */; };
+		D7BF92C42D78BEB800C4C220 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = D7BF92C32D78BEB200C4C220 /* LICENSE.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1B97FCFD2D7872250042C813 /* Crowdfunding-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crowdfunding-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7BF92C12D78BEA000C4C220 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D7BF92C32D78BEB200C4C220 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +39,8 @@
 		1B97FCF42D7872250042C813 = {
 			isa = PBXGroup;
 			children = (
+				D7BF92C32D78BEB200C4C220 /* LICENSE.md */,
+				D7BF92C12D78BEA000C4C220 /* README.md */,
 				1B97FCFF2D7872250042C813 /* Crowdfunding-SwiftUI */,
 				1B97FCFE2D7872250042C813 /* Products */,
 			);
@@ -109,6 +118,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7BF92C42D78BEB800C4C220 /* LICENSE.md in Resources */,
+				D7BF92C22D78BEA600C4C220 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,7 @@ import Foundation
  }]
  */
 
+// Update CreateCampaignRequest to match backend
 struct CreateCampaignRequest: Codable {
     let owner: String
     let title: String
@@ -23,5 +24,5 @@ struct CreateCampaignRequest: Codable {
     let target: Double
     let deadline: Date
     let image: String?
-    let amountCollected: Double
+    var amountCollected: Double = 0
 }

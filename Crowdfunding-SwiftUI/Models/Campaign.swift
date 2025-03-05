@@ -17,6 +17,7 @@ import Foundation
      }
  ]
 */
+
 import Foundation
 
 struct Campaign: Identifiable, Codable {
@@ -26,25 +27,18 @@ struct Campaign: Identifiable, Codable {
     let description: String
     let target: Double
     let deadline: Date
-    var amountCollected: Double
-    let image: String?
+    let amountCollected: Double
+    let image: String
     
-    var status: CampaignStatus {
-        if amountCollected >= target {
-            return .completed
-        }
-        
-        if deadline < Date() {
-            return .cancelled
-        }
-        
-        return .active
+    // Custom coding keys to match backend
+    enum CodingKeys: String, CodingKey {
+        case id
+        case owner
+        case title
+        case description
+        case target
+        case deadline
+        case amountCollected
+        case image
     }
 }
-enum CampaignStatus: String, Codable {
-    case draft
-    case active
-    case completed
-    case cancelled
-}
-

@@ -1,52 +1,88 @@
 import SwiftUI
 
-struct CreateCampaignsView: View {
-    @ObservedObject var viewModel: CampaignsViewModel
+struct CreateCampaignView: View {
     @Environment(\.presentationMode) var presentationMode
+    @StateObject private var viewModel: CampaignsViewModel
     
     @State private var owner = ""
     @State private var title = ""
     @State private var description = ""
-    @State private var startDate = Date()
-    @State private var endDate = Date().addingTimeInterval(30 * 24 * 60 * 60) // 30 days from now
-    @State private var goal = ""
-    @State private var image: String?
+    @State private var target: Double = 0.0
+    @State private var deadline = Date()
+    @State private var image: String = ""
+    
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
+    
+    init(viewModel: CampaignsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         NavigationView {
             Form {
-                TextField("Owner Name", text: $owner)
-                TextField("Campaign Title", text: $title)
-                TextField("Description", text: $description)
-                DatePicker("Deadline", selection: $endDate, displayedComponents: .date)
-                TextField("Funding Goal", text: $goal)
-                    .keyboardType(.decimalPad)
-                TextField("Image URL (Optional)", text: Binding(
-                    get: { image ?? "" },
-                    set: { image = $0.isEmpty ? nil : $0 }
-                ))
+                Section(header: Text("Campaign Details")) {
+                    TextField("Owner", text: $owner)
+                    TextField("Title", text: $title)
+                    TextField("Description", text: $description)
+                    
+                    HStack {
+                        Text("Target Amount")
+                        TextField("Amount", value: $target, format: .number)
+                            .keyboardType(.decimalPad)
+                    }
+                    
+                    DatePicker("Deadline", selection: $deadline, displayedComponents: .date)
+                    
+                    TextField("Image URL (Optional)", text: $image)
+                }
+                
+                Section {
+                    Button(action: createCampaign) {
+                        Text("Create Campaign")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .disabled(!isFormValid)
+                }
             }
             .navigationTitle("Create Campaign")
-            .navigationBarItems(
-                leading: Button("Cancel") { presentationMode.wrappedValue.dismiss() },
-                trailing: Button("Create") {
-                    guard let goalAmount = Double(goal) else { return }
-                    viewModel.createCampaign(
-                        owner: owner,
-                        title: title,
-                        description: description,
-                        target: goalAmount,
-                        deadline: endDate,
-                        image: image
-                    )
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .disabled(title.isEmpty || description.isEmpty || goal.isEmpty || owner.isEmpty)
-            )
+            .navigationBarItems(trailing: Button("Cancel") {
+                presentationMode.wrappedValue.dismiss()
+            })
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text("Campaign Creation"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
+    }
+    
+    private var isFormValid: Bool {
+        !owner.isEmpty && !title.isEmpty && !description.isEmpty && target > 0
+    }
+    
+    private func createCampaign() {
+        viewModel.createCampaign(
+            owner: owner,
+            title: title,
+            description: description,
+            target: target,
+            deadline: deadline,
+            image: image.isEmpty ? nil : image
+        )
+        
+        // Show success alert and dismiss view
+        alertMessage = "Campaign created successfully!"
+        showingAlert = true
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
-#Preview {
-    CreateCampaignsView(viewModel: CampaignsViewModel())
+// Preview for development
+struct CreateCampaignView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreateCampaignView(viewModel: CampaignsViewModel())
+    }
 }

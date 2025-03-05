@@ -45,8 +45,7 @@ class CampaignsViewModel: ObservableObject {
             description: description,
             target: target,
             deadline: deadline,
-            image: image,
-            amountCollected: 0
+            image: image
         )
         
         isLoading = true
