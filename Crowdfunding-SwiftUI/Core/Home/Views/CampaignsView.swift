@@ -40,15 +40,6 @@ struct CampaignsView: View {
     }
 }
 
-// Placeholder for CampaignDetailView (to be implemented later)
-struct CampaignDetailView: View {
-    let campaign: Campaign
-    
-    var body: some View {
-        Text("Campaign Details for \(campaign.title)")
-    }
-}
-
 struct CampaignsView_Previews: PreviewProvider {
     static var previews: some View {
         CampaignsView()

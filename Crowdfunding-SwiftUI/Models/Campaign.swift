@@ -27,7 +27,7 @@ struct Campaign: Identifiable, Codable {
     let description: String
     let target: Double
     let deadline: Date
-    let amountCollected: Double
+    var amountCollected: Double
     let image: String
     
     // Custom coding keys to match backend
