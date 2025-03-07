@@ -20,7 +20,7 @@ struct CampaignsView: View {
                             VStack(alignment: .leading) {
                                 Text(campaign.title)
                                     .font(.headline)
-                                Text("Target: $\(campaign.target, specifier: "%.2f")")
+                                Text("Target: Ksh \(campaign.target, specifier: "%.2f")")
                                     .font(.subheadline)
                             }
                         }
@@ -45,3 +45,18 @@ struct CampaignsView_Previews: PreviewProvider {
         CampaignsView()
     }
 }
+
+
+///
+///
+///
+///
+///// Campaigns View
+//struct CampaignsView: View {
+//var body: some View {
+//NavigationView {
+//Text("Campaigns will be listed here")
+//.navigationTitle("Campaigns")
+//}
+//}
+//}

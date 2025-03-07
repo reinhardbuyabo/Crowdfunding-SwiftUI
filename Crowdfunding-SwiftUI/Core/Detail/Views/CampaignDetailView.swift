@@ -22,9 +22,9 @@ struct CampaignDetailView: View {
             .frame(height: 200)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             
-            Text("Target: \(campaign.target, specifier: "%.2f")")
+            Text("Target: Ksh \(campaign.target, specifier: "%.2f")")
                 .font(.headline)
-            Text("Amount Collected: \(viewModel.campaign?.amountCollected ?? campaign.amountCollected, specifier: "%.2f")")
+            Text("Amount Collected: Ksh \(viewModel.campaign?.amountCollected ?? campaign.amountCollected, specifier: "%.2f")")
                 .font(.headline)
             Text("Deadline: \(campaign.deadline, style: .date)")
                 .font(.headline)
@@ -62,7 +62,7 @@ struct CampaignDetailView: View {
             .alert(isPresented: $viewModel.showSuccessMessage) {
                 Alert(
                     title: Text("Donation Successful"),
-                    message: Text("You donated \(viewModel.donationAmount!, specifier: "%.2f") successfully!"),
+                    message: Text("You donated Ksh\(viewModel.donationAmount!, specifier: "%.2f") successfully!"),
                     dismissButton: .default(Text("OK")) {
                         viewModel.updateCampaignAmountCollected()
                         viewModel.navigateToCampaigns()

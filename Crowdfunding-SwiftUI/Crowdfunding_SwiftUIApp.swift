@@ -4,7 +4,8 @@ import SwiftUI
 struct Crowdfunding_SwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            CampaignsView()
+//            CampaignsView()
+            MainTabView()
         }
     }
 }
